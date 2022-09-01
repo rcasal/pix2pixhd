@@ -57,7 +57,7 @@ def train_networks(gpu, args):
         return 1. if epoch < args.decay_after else 1 - float(epoch - args.decay_after) / (args.num_epochs - args.decay_after)
 
     ### Init train
-    ## Phase 1: Low Resolution (1024 x 512)
+    ## Phase 1: Low Resolution
     dataloader1 = create_loaders(train_dir, target_width=args.target_width_1, batch_size=args.batch_size_1, n_classes=n_classes, world_size=args.world_size, rank=rank)
     encoder = Encoder(rgb_channels, n_features).cuda(args.gpu).apply(weights_init)
     generator1 = GlobalGenerator(dataloader1.dataset.get_input_size_g(), rgb_channels).apply(weights_init)
@@ -68,7 +68,7 @@ def train_networks(gpu, args):
     g1_scheduler = torch.optim.lr_scheduler.LambdaLR(g1_optimizer, lr_lambda)
     d1_scheduler = torch.optim.lr_scheduler.LambdaLR(d1_optimizer, lr_lambda)
 
-    ## Phase 2: High Resolution (2048 x 1024)
+    ## Phase 2: High Resolution
     dataloader2 = create_loaders(train_dir, target_width=args.target_width_2, batch_size=args.batch_size_2, n_classes=n_classes, world_size=args.world_size, rank=rank)
     generator2 = LocalEnhancer(dataloader2.dataset.get_input_size_g(), rgb_channels).apply(weights_init)
     discriminator2 = MultiscaleDiscriminator(dataloader2.dataset.get_input_size_d()).apply(weights_init)
