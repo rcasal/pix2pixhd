@@ -61,7 +61,7 @@ def sample_images(args):
     generator.load_state_dict(cp['generator_state_dict'])
     discriminator.load_state_dict(cp['discriminator_state_dict'])
 
-    for (img_i, labels, insts, bounds, _) in dataloader:
+    for (img_i, labels, insts, bounds, _, file_name) in dataloader:
         img_i = img_i.cuda(args.device)
         labels = labels.cuda(args.device)
         insts = insts.cuda(args.device)
@@ -69,7 +69,7 @@ def sample_images(args):
         
         img_o_fake = generator(torch.cat((img_i,labels, bounds), dim=1))
 
-        save_sampled_images(img_o_fake.to(img_i.dtype), args.output_images_path)
+        save_sampled_images(img_o_fake.to(img_i.dtype), args.output_images_path, file_name)
 
     return print("done training")
 

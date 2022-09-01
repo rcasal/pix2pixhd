@@ -93,9 +93,7 @@ class SwordSorceryDataset(torch.utils.data.Dataset):
     
     def __getitem__(self, idx):
         example = self.examples[idx]
-        print(example)
-        basename_without_ext = os.path.splitext(os.path.basename(example['input_img']))[0]
-        print(basename_without_ext)
+        file_name = os.path.splitext(os.path.basename(example['input_img']))[0]
         # Load input and output images
         img_i = Image.open(example['input_img']).convert('RGB')  # color image: (3, 512, 1024)
         try:
@@ -133,27 +131,28 @@ class SwordSorceryDataset(torch.utils.data.Dataset):
         else:   
             label = torch.zeros(0, img_i.shape[1], img_i.shape[2])
  
-        return (img_i, label, inst, bound, img_o)
+        return (img_i, label, inst, bound, img_o, file_name)
 
     def __len__(self):
         return len(self.examples)
 
     @staticmethod
     def collate_fn(batch):
-        imgs_i, labels, insts, bounds, imgs_o = [], [], [], [], []
-        for (x, l, i, b, o) in batch:
+        imgs_i, labels, insts, bounds, imgs_o, file_name = [], [], [], [], [], []
+        for (x, l, i, b, o, f) in batch:
             imgs_i.append(x)
             labels.append(l)
             insts.append(i)
             bounds.append(b)
             imgs_o.append(o)
+            file_name.append(f)
         return (
             torch.stack(imgs_i, dim=0),
             torch.stack(labels, dim=0),
             torch.stack(insts, dim=0),
             torch.stack(bounds, dim=0),
             torch.stack(imgs_o, dim=0),
-
+            torch.stack(file_name, dim=0)
         )
 
     def get_input_size_g(self):
