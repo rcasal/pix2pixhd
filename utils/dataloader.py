@@ -156,11 +156,11 @@ class SwordSorceryDataset(torch.utils.data.Dataset):
         )
 
     def get_input_size_g(self):
-        img_i, label, inst, bound, img_o = self.__getitem__(1)
+        img_i, label, inst, bound, img_o, _ = self.__getitem__(1)
         return img_i.shape[0] + label.shape[0] + bound.shape[0]
 
     def get_input_size_d(self):
-        img_i, label, inst, bound, img_o = self.__getitem__(1)
+        img_i, label, inst, bound, img_o, _ = self.__getitem__(1)
         return bound.shape[0] + label.shape[0] + img_o.shape[0]
  
     # it's remaining input_size_encoder because we're not using that for now
