@@ -43,7 +43,7 @@ def sample_images(args):
 
     dataloader = DataLoader(
         SwordSorceryDataset(dataset_dir, target_width=args.target_width, n_classes=n_classes),
-        collate_fn=SwordSorceryDataset.collate_fn, batch_size=1, shuffle=False, drop_last=False, pin_memory=True,
+        collate_fn=SwordSorceryDataset.collate_fn, batch_size=1, shuffle=False, drop_last=False,
     )
     encoder = Encoder(rgb_channels, n_features).to(args.device)
     generator = LocalEnhancer(dataloader.dataset.get_input_size_g(), rgb_channels)

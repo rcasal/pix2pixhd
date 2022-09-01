@@ -6,7 +6,7 @@ from PIL import Image
 import os
 import numpy as np
 from utils.utils import is_distributed
-
+from pathlib import Path
 
 def create_loaders(train_dir, target_width, batch_size, n_classes, world_size, rank):
     
@@ -94,6 +94,8 @@ class SwordSorceryDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         example = self.examples[idx]
         print(example)
+        basename_without_ext = os.path.splitext(os.path.basename(example))[0]
+        print(basename_without_ext)
         # Load input and output images
         img_i = Image.open(example['input_img']).convert('RGB')  # color image: (3, 512, 1024)
         try:
