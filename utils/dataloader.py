@@ -90,27 +90,16 @@ class SwordSorceryDataset(torch.utils.data.Dataset):
                         if file_name not in self.examples.keys():
                             self.examples[file_name] = {}
                         self.examples[file_name][attr] = root + '/' + f
-
-        """
-        for path_input, attr in paths['path_inputs']:
-          abs_path = os.path.join(paths['path_root'], path_input)
-          assert os.path.isdir(abs_path)
-          for root, _, files in os.walk(abs_path):
-            for f in files:
-              if f.split('.')[1] in ('jpg', 'jpeg', 'png'):
-                file_name = f.split('.')[0] # keep name, remove .jpg or .png
-
-                if file_name not in self.examples.keys():
-                    self.examples[file_name] = {}
-                self.examples[file_name][attr] = root + '/' + f
-        """
     
     def __getitem__(self, idx):
         example = self.examples[idx]
 
         # Load input and output images
         img_i = Image.open(example['input_img']).convert('RGB')  # color image: (3, 512, 1024)
-        img_o = Image.open(example['output_img']).convert('RGB')  # color image: (3, 512, 1024)
+        try:
+            img_o = Image.open(example['output_img']).convert('RGB')  # color image: (3, 512, 1024)
+        except:
+            img_o = Image.open(example['input_img']).convert('RGB')  # if there is no output_img, it works as autoencoder (or in sample)
 
         # Apply corresponding transforms
         img_i = self.img_transforms(img_i)

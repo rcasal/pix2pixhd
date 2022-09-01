@@ -46,6 +46,24 @@ def save_tensor_images(image_tensor_fake, image_tensor_real, epoch, stage, cur_s
     #plt.savefig()
 
 
+
+def save_sampled_images(image_tensor_fake, path):
+    '''
+    Function for visualizing images: Given a tensor of imagess, number of images, and
+    size per image, plots and prints the images in an uniform grid.
+    '''
+    # fake
+    image_tensor_fake = (image_tensor_fake + 1) / 2
+    image_fake_unflat = image_tensor_fake.detach().cpu()
+    image_fake_grid = make_grid(image_fake_unflat[:1], nrow=1)
+    
+    fig, ax = plt.subplots( nrows=1, ncols=1 )
+    ax.imshow(image_fake_grid.permute(1, 2, 0).squeeze())
+
+    output_path = os.path.join(path,f"file_15.jpg") # need to change name
+    fig.savefig(output_path)
+    #plt.savefig()
+
 def str2bool(v):
     if isinstance(v, bool):
         return v
