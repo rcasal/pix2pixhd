@@ -55,7 +55,7 @@ def sample_images(args):
     args.output_images_path = os.path.join(args.output_path_dir, args.output_images_path)
 
     # Sampling
-    generator, discriminator = generator.to(args.gpu).eval(), discriminator.to(args.gpu).eval()
+    generator, discriminator = generator.to(args.device).eval(), discriminator.to(args.device).eval()
    
     # recover model
     cp = torch.load(args.saved_model_path)
@@ -64,10 +64,10 @@ def sample_images(args):
     discriminator.load_state_dict(cp['discriminator_state_dict'])
 
     for (img_i, labels, insts, bounds, _) in dataloader:
-        img_i = img_i.cuda(args.gpu)
-        labels = labels.cuda(args.gpu)
-        insts = insts.cuda(args.gpu)
-        bounds = bounds.cuda(args.gpu)
+        img_i = img_i.cuda(args.device)
+        labels = labels.cuda(args.device)
+        insts = insts.cuda(args.device)
+        bounds = bounds.cuda(args.device)
         
         img_o_fake = generator(torch.cat((img_i,labels, bounds), dim=1))
 
