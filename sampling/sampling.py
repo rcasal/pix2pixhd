@@ -69,9 +69,9 @@ def sample_images(args):
         
         img_o_fake = generator(torch.cat((img_i,labels, bounds), dim=1))
 
-        save_sampled_images(img_o_fake.to(img_i.dtype), args.output_images_path, file_name)
+        save_sampled_images(img_o_fake.to(img_i.dtype), args.output_images_path, file_name[0])
 
-    return print("done training")
+    return print("done prediction")
 
 
 # Freeze encoder and wrap to support high-resolution inputs/outputs
