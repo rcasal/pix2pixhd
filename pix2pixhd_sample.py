@@ -3,10 +3,6 @@ import os
 import warnings
 from sampling.sampling import sample_images
 from utils.utils import str2bool
-from datetime import datetime
-import torch
-import torch.distributed as dist
-import torch.multiprocessing as mp
 
 def parse_args():
     desc = "Pix2PixHD_sample"

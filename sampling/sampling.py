@@ -4,17 +4,15 @@ import torch.nn.functional as F
 import torch.distributed as dist
 
 from tqdm.auto import tqdm
-import time
 import os
 
 from models.discriminators import MultiscaleDiscriminator
 from models.generators import LocalEnhancer
-from models.loss import gd_loss, VGG_Loss
 from models.models_utils import Encoder
 from utils.dataloader import DataLoader, SwordSorceryDataset
 from utils.utils import save_sampled_images
 
-NODES      = int(os.environ.get('WORLD_SIZE', 1))
+NODES = int(os.environ.get('WORLD_SIZE', 1))
 
 # Parse torch version for autocast
 # ######################################################
@@ -61,7 +59,7 @@ def sample_images(args):
     generator.load_state_dict(cp['generator_state_dict'])
     discriminator.load_state_dict(cp['discriminator_state_dict'])
 
-    for (img_i, labels, insts, bounds, _, file_name) in dataloader:
+    for (img_i, labels, insts, bounds, _, file_name) in tqdm(dataloader):
         img_i = img_i.cuda(args.device)
         labels = labels.cuda(args.device)
         insts = insts.cuda(args.device)
