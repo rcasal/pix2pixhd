@@ -60,10 +60,10 @@ def sample_images(args):
     discriminator.load_state_dict(cp['discriminator_state_dict'])
 
     for (img_i, labels, insts, bounds, _, file_name) in tqdm(dataloader):
-        img_i = img_i.cuda(args.device)
-        labels = labels.cuda(args.device)
-        insts = insts.cuda(args.device)
-        bounds = bounds.cuda(args.device)
+        img_i = img_i.to(args.device)
+        labels = labels.to(args.device)
+        insts = insts.to(args.device)
+        bounds = bounds.to(args.device)
         
         img_o_fake = generator(torch.cat((img_i,labels, bounds), dim=1))
 
