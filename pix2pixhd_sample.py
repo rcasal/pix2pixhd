@@ -20,10 +20,10 @@ def parse_args():
     parser.add_argument('--input_img_dir', type=str, default="02_output", help='Folder name for input images located in input_path_dir')
     parser.add_argument('--input_label_dir', type=str, default="--nodir--", help='Folder name for optional labeled images located in input_path_dir')        # 01_segmented_input
     parser.add_argument('--input_inst_dir', type=str, default="01_segmented_input", help='Folder name for optional instances images located in input_path_dir') 
-    parser.add_argument('--saved_model_path', type=str, default="Saved_Models", help='Folder name for saved model')
+    parser.add_argument('--saved_model_path', type=str, default="Saved_Models", help='Path to the saved model')
 
     # Experiment parameters
-    parser.add_argument('--experiment_name', type=str, default="", help='A name for the experiment')
+    parser.add_argument('--experiment_name', type=str, default="", help='A name of the training experiment')
     parser.add_argument('--resume_training', type=str2bool, nargs='?', const=True, default=False, help="Continue training allows to resume training. You'll need to add experiment name args to identify the experiment to recover.")
 
     # Output parameters
@@ -31,8 +31,7 @@ def parse_args():
 
     # Output paths
     parser.add_argument('--output_path_dir', type=str, default="", help='The base directory to hold the results')
-    parser.add_argument('--output_images_path', type=str, default="Images", help='Folder name for save images during training')
-    parser.add_argument('--saved_history_path', type=str, default="History/", help='The directory for history experiments. Compatible with TensorBoard.')
+    parser.add_argument('--output_images_path', type=str, default="Sampled_images", help='Folder name for save images during training')
 
     # Warnings parameters
     parser.add_argument('--warnings', type=str2bool, nargs='?', const=False, default=True, help="Show warnings")
@@ -48,19 +47,16 @@ def main():
         warnings.filterwarnings("ignore")
 
     # Resume training and experiment name
-    if (args.resume_training):
-        args.experiment_name = args.experiment_name
-        args.low_resolution_finished = torch.load(os.path.join(args.output_path_dir, args.experiment_name, args.saved_model_path, 'training_status.info'))['low_resolution_finished']
-    else:
-        args.experiment_name = datetime.now().strftime("%Y_%m_%d_%H_%M") + "_" + args.experiment_name
-        args.low_resolution_finished = False
-
+    args.experiment_name = args.experiment_name
+    
     # Output path dir
     args.output_path_dir = os.path.join(args.output_path_dir,args.experiment_name) 
     if(not os.path.exists(args.output_path_dir)):
         print('creating directories in ' + args.output_path_dir)
         os.makedirs(args.output_path_dir, exist_ok=True)
         os.makedirs(os.path.join(args.output_path_dir, args.output_images_path), exist_ok=True)
+
+    args.saved_model_path = os.path.join(args.output_path_dir, args.output_images_path)
 
     sample_images(args)
 
