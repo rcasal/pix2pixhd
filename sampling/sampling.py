@@ -12,9 +12,7 @@ from models.generators import LocalEnhancer
 from models.loss import gd_loss, VGG_Loss
 from models.models_utils import Encoder
 from utils.dataloader import DataLoader, SwordSorceryDataset
-from utils.utils import save_tensor_images
-from torch.utils.tensorboard import SummaryWriter
-
+from utils.utils import save_sampled_images
 
 NODES      = int(os.environ.get('WORLD_SIZE', 1))
 
@@ -71,7 +69,7 @@ def sample_images(args):
         
         img_o_fake = generator(torch.cat((img_i,labels, bounds), dim=1))
 
-        save_tensor_images(img_o_fake.to(img_i.dtype), args.output_images_path)
+        save_sampled_images(img_o_fake.to(img_i.dtype), args.output_images_path)
 
     return print("done training")
 
