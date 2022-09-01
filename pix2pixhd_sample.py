@@ -51,12 +51,11 @@ def main():
     
     # Output path dir
     args.output_path_dir = os.path.join(args.output_path_dir,args.experiment_name) 
-    if(not os.path.exists(args.output_path_dir)):
-        print('creating directories in ' + args.output_path_dir)
-        os.makedirs(args.output_path_dir, exist_ok=True)
-        os.makedirs(os.path.join(args.output_path_dir, args.output_images_path), exist_ok=True)
+    print('creating directories in ' + args.output_path_dir)
+    os.makedirs(args.output_path_dir, exist_ok=True)
+    os.makedirs(os.path.join(args.output_path_dir, args.output_images_path), exist_ok=True)
 
-    args.saved_model_path = os.path.join(args.output_path_dir, args.output_images_path)
+    args.saved_model_path = os.path.join(args.output_path_dir, args.saved_model_path)
 
     sample_images(args)
 
