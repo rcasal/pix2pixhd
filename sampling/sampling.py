@@ -26,7 +26,7 @@ def sample_images(args):
     # init params
     n_classes = args.n_classes                  # total number of object classes # maybe we're not using n_classes, just args.n_classes
     rgb_channels = n_features = args.n_features       
-    args.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    args.device = torch.device('cpu' if torch.cuda.is_available() else 'cpu')
 
     
     # Training directories
