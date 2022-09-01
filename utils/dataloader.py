@@ -152,7 +152,7 @@ class SwordSorceryDataset(torch.utils.data.Dataset):
             torch.stack(insts, dim=0),
             torch.stack(bounds, dim=0),
             torch.stack(imgs_o, dim=0),
-            #torch.stack(file_name, dim=0)
+            file_name#torch.stack(file_name, dim=0)
         )
 
     def get_input_size_g(self):
