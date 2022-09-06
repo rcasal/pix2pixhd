@@ -17,6 +17,7 @@ def parse_args():
     parser.add_argument('--input_label_dir', type=str, default="--nodir--", help='Folder name for optional labeled images located in input_path_dir')        # 01_segmented_input
     parser.add_argument('--input_inst_dir', type=str, default="01_segmented_input", help='Folder name for optional instances images located in input_path_dir') 
     parser.add_argument('--saved_model_path', type=str, default="Saved_Models", help='Path to the saved model')
+    parser.add_argument('--model_name', type=str, default="pix2pixHD_model.pth", help='Name of the saved model')
 
     # Experiment parameters
     parser.add_argument('--experiment_name', type=str, default="", help='A name of the training experiment')
@@ -28,6 +29,7 @@ def parse_args():
     # Output paths
     parser.add_argument('--output_path_dir', type=str, default="", help='The base directory to hold the results')
     parser.add_argument('--output_images_path', type=str, default="Sampled_images", help='Folder name for save images during training')
+    parser.add_argument('--output_images_subfolder_path', type=str, default="", help='Subfolder name for save images during training')
 
     # Warnings parameters
     parser.add_argument('--warnings', type=str2bool, nargs='?', const=False, default=True, help="Show warnings")
@@ -49,9 +51,9 @@ def main():
     args.output_path_dir = os.path.join(args.output_path_dir,args.experiment_name) 
     print('creating directories in ' + args.output_path_dir)
     os.makedirs(args.output_path_dir, exist_ok=True)
-    os.makedirs(os.path.join(args.output_path_dir, args.output_images_path), exist_ok=True)
+    os.makedirs(os.path.join(args.output_path_dir, args.output_images_path, args.output_images_subfolder_path), exist_ok=True)
 
-    args.saved_model_path = os.path.join(args.output_path_dir, args.saved_model_path, 'pix2pixHD_model.pth')
+    args.saved_model_path = os.path.join(args.output_path_dir, args.saved_model_path, args.model_name)
 
     sample_images(args)
 
