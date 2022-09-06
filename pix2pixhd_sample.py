@@ -54,7 +54,9 @@ def main():
     os.makedirs(os.path.join(args.output_path_dir, args.output_images_path, args.output_images_subfolder_path), exist_ok=True)
 
     args.saved_model_path = os.path.join(args.output_path_dir, args.saved_model_path, args.model_name)
-    print(args.saved_model_path)
+    
+    print('Recovering model: ' + args.saved_model_path)
+    
     sample_images(args)
 
 
