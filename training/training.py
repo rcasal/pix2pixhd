@@ -54,7 +54,7 @@ def train_networks(gpu, args):
     # functions
     def lr_lambda(epoch):
         ''' Function for scheduling learning '''
-        return 1. if epoch < args.decay_after else 1 - float(epoch - args.decay_after) / (args.num_epochs - args.decay_after)
+        return 1. if epoch < args.decay_after else 1 - float(epoch - args.decay_after) / (args.epochs2 - args.decay_after)
 
     ### Init train
     ## Phase 1: Low Resolution
