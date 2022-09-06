@@ -61,7 +61,7 @@ def save_sampled_images(image_tensor_fake, path, file_name):
     plt.axis('off')
 
     output_path = os.path.join(path,f"{file_name}.jpg") # need to change name
-    fig.savefig(output_path)
+    fig.savefig(output_path, bbox_inches='tight')
     #plt.savefig()
 
 def str2bool(v):
