@@ -48,7 +48,7 @@ def sample_images(args):
     discriminator = MultiscaleDiscriminator(dataloader.dataset.get_input_size_d())
 
     # Model and output paths
-    args.output_images_path = os.path.join(args.output_path_dir, args.output_images_path)
+    args.output_images_path = os.path.join(args.output_path_dir, args.output_images_path, args.output_images_subfolder_path)
 
     # Sampling
     generator, discriminator = generator.to(args.device).eval(), discriminator.to(args.device).eval()
