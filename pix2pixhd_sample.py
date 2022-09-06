@@ -55,7 +55,7 @@ def main():
 
     args.saved_model_path = os.path.join(args.output_path_dir, args.saved_model_path, args.model_name)
     
-    print('Recovering model: ' + args.saved_model_path)
+    print('Recovering model from ' + args.saved_model_path)
     
     sample_images(args)
 
