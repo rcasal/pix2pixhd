@@ -55,6 +55,7 @@ def sample_images(args):
    
     # recover model
     cp = torch.load(args.saved_model_path)
+    print(cp)
     #encoder.load_state_dict(cp['encoder_state_dict'])          # Load state of the last epoch
     generator.load_state_dict(cp['generator_state_dict'])
     discriminator.load_state_dict(cp['discriminator_state_dict'])
